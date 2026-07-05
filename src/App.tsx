@@ -3,7 +3,6 @@ import ShaderBackground from './components/ShaderBackground';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
-import Dashboard from './components/Dashboard';
 import { User, Skill, SyncSource } from './types';
 
 const INITIAL_SKILLS: Skill[] = [
@@ -42,7 +41,7 @@ const INITIAL_SOURCES: SyncSource[] = [
 ];
 
 export default function App() {
-  const [view, setView] = useState<'signin' | 'signup' | 'forgot' | 'dashboard'>('signin');
+  const [view, setView] = useState<'signin' | 'signup' | 'forgot'>('signin');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   // Load session from localStorage on mount
@@ -51,7 +50,6 @@ export default function App() {
     if (savedSession) {
       try {
         setCurrentUser(JSON.parse(savedSession));
-        setView('dashboard');
       } catch (err) {
         console.error('Failed to parse saved session', err);
       }
@@ -86,7 +84,6 @@ export default function App() {
     };
 
     handleUpdateUser(defaultUser);
-    setView('dashboard');
   };
 
   const handleSignUpSuccess = (data: {
@@ -96,14 +93,11 @@ export default function App() {
     role: string;
     city: string;
   }) => {
-    // Map selected role to fieldOfStudy and targetCareer to keep the dashboard context cohesive
-    let fieldOfStudy = 'Computer Science & AI';
-    let targetCareer = 'AI Software Engineer';
+    // Map selected role to fieldOfStudy and targetCareer to keep the context cohesive
+    let fieldOfStudy = 'General Science & Technology';
+    let targetCareer = 'Future Tech Innovator';
 
-    if (data.role === 'School Student') {
-      fieldOfStudy = 'General Science & Technology';
-      targetCareer = 'Future Tech Innovator';
-    } else if (data.role === 'Postgraduate') {
+    if (data.role === 'Postgraduate') {
       fieldOfStudy = 'Data Science & Machine Learning';
       targetCareer = 'AI Research Scientist';
     } else if (data.role === 'Parent') {
@@ -134,7 +128,6 @@ export default function App() {
     };
 
     handleUpdateUser(newUser);
-    setView('dashboard');
   };
 
   const handleSignOut = () => {
@@ -167,14 +160,6 @@ export default function App() {
 
         {view === 'forgot' && (
           <ForgotPassword onSignInClick={() => setView('signin')} />
-        )}
-
-        {view === 'dashboard' && currentUser && (
-          <Dashboard
-            user={currentUser}
-            onUpdateUser={handleUpdateUser}
-            onSignOut={handleSignOut}
-          />
         )}
       </div>
 
