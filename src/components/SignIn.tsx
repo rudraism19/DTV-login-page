@@ -155,7 +155,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
             onClick={handleDemoSignIn}
             className="text-[11px] font-semibold text-[#dbb8ff]/60 hover:text-[#dbb8ff] hover:underline transition-all cursor-pointer"
           >
-            🔑 Log in quickly with a Demo Student Profile
+          
           </button>
         </div>
 
