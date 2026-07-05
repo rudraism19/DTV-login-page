@@ -73,7 +73,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="glass-input w-full rounded-lg py-3 pl-12 pr-4 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-sm outline-none"
+                className="glass-input w-full rounded-lg py-3 pl-12 pr-4 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-sm outline-none"
                 placeholder="Please enter a valid email."
               />
             </div>
@@ -102,7 +102,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="glass-input w-full rounded-lg py-3 pl-12 pr-12 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-sm outline-none"
+                className="glass-input w-full rounded-lg py-3 pl-12 pr-12 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-sm outline-none"
                 placeholder="Please enter your password."
               />
               <button

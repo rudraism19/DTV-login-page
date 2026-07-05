@@ -25,7 +25,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [role, setRole] = useState(ROLES[0]);
+  const [role, setRole] = useState('');
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -98,7 +98,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="e.g. Alex Rivera"
                 />
               </div>
@@ -118,7 +118,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="e.g. alex@university.edu"
                 />
               </div>
@@ -140,7 +140,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="tel"
                   value={mobileNumber}
                   onChange={(e) => setMobileNumber(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="e.g. +1 (555) 019-2834"
                 />
               </div>
@@ -160,7 +160,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="e.g. San Francisco"
                 />
               </div>
@@ -180,8 +180,13 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                 id="role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="glass-input w-full rounded-lg py-2.5 pl-10 pr-8 text-white bg-black/65 border border-white/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none appearance-none cursor-pointer"
+                className={`glass-input w-full rounded-lg py-2.5 pl-10 pr-8 bg-black/65 border border-white/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none appearance-none cursor-pointer ${
+                  role === '' ? 'text-[#b4acc0]' : 'text-white'
+                }`}
               >
+                <option value="" disabled className="bg-[#191c1e] text-[#b4acc0]">
+                  Select your role
+                </option>
                 {ROLES.map((roleOpt) => (
                   <option key={roleOpt} value={roleOpt} className="bg-[#191c1e] text-white">
                     {roleOpt}
@@ -211,7 +216,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="At least 6 characters"
                 />
               </div>
@@ -231,7 +236,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#494454] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
+                  className="glass-input w-full rounded-lg py-2.5 pl-10 pr-3 text-white bg-black/60 border border-white/10 placeholder-[#b4acc0] focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none"
                   placeholder="Confirm your password"
                 />
               </div>
