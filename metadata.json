@@ -1,0 +1,6 @@
+{
+  "name": "Digital Twin Verse for Students",
+  "description": "An interactive digital twin platform for students to track their skills, simulate learning paths, and receive Gemini-powered personalized study advice.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
