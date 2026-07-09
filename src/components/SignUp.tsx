@@ -100,7 +100,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
           alt="Digital Twin Verse"
           referrerPolicy="no-referrer"
           className="w-20 h-20 rounded-2xl object-cover shadow-[0_0_30px_rgba(212,175,55,0.2)] border border-[#d4af37]/20 mb-4"
-          src="https://lh3.googleusercontent.com/aida/AP1WRLulsIFEb3rpbjzyuQ_4Ev9v7vzOI3hqAGGJq_uAEQTk6bvEB-tYRH1EP88dU1MVIYE0fz6Q8MbiMrFZOx3n0pWnP2Qzb7SvCb6o10LR0IFskt94L_ybjg3Cz1CoXSYinB5NShcuwFjGjAK81CPR8A06EUh06gwxFp-SQ6TsJRkPwIjtxY-J3I3GT5xF2GS9IH02iCDnhoZtjAoC-UiwJOIAjG9-w18_9RbnlBBqdnCBOG3tiQ47T6UTCoTi"
+          src="https://digitaltwinvrs.com/img/dtv-logo.jpg"
         />
         <h1 className="text-2xl font-extrabold text-white tracking-tight mb-2 font-sans">
           Create Your DTV Profile
@@ -216,9 +216,8 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                 id="role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className={`glass-input w-full rounded-lg py-2.5 pl-10 pr-8 bg-black/65 border border-white/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none appearance-none cursor-pointer ${
-                  role === '' ? 'text-[#b4acc0]' : 'text-white'
-                }`}
+                className={`glass-input w-full rounded-lg py-2.5 pl-10 pr-8 bg-black/65 border border-white/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs outline-none appearance-none cursor-pointer ${role === '' ? 'text-[#b4acc0]' : 'text-white'
+                  }`}
               >
                 <option value="" disabled className="bg-[#191c1e] text-[#b4acc0]">
                   Select your role
@@ -231,7 +230,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white">
                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                 </svg>
               </div>
             </div>

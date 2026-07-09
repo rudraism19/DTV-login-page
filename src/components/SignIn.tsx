@@ -50,7 +50,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
           alt="Digital Twin Verse"
           referrerPolicy="no-referrer"
           className="w-24 h-24 rounded-2xl object-cover shadow-[0_0_35px_rgba(212,175,55,0.25)] border border-[#d4af37]/20 mb-6"
-          src="https://lh3.googleusercontent.com/aida/AP1WRLulsIFEb3rpbjzyuQ_4Ev9v7vzOI3hqAGGJq_uAEQTk6bvEB-tYRH1EP88dU1MVIYE0fz6Q8MbiMrFZOx3n0pWnP2Qzb7SvCb6o10LR0IFskt94L_ybjg3Cz1CoXSYinB5NShcuwFjGjAK81CPR8A06EUh06gwxFp-SQ6TsJRkPwIjtxY-J3I3GT5xF2GS9IH02iCDnhoZtjAoC-UiwJOIAjG9-w18_9RbnlBBqdnCBOG3tiQ47T6UTCoTi"
+          src='https://digitaltwinvrs.com/img/dtv-logo.jpg'
         />
         <h1 className="text-3xl font-extrabold text-white tracking-tight mb-3 font-sans">
           Sign In to Continue
@@ -235,7 +235,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
             onClick={handleDemoSignIn}
             className="text-[11px] font-semibold text-[#dbb8ff]/60 hover:text-[#dbb8ff] hover:underline transition-all cursor-pointer"
           >
-          
+
           </button>
         </div>
 
