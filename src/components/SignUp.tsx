@@ -93,6 +93,14 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
 
   return (
     <div className="w-full max-w-xl px-6 py-8 relative z-10 flex flex-col items-center animate-[fadeInScale_0.6s_ease-out_forwards]">
+      {/* Back to Home button */}
+      <button 
+        onClick={() => window.location.href = '/index.html'}
+        className="absolute top-2 left-6 flex items-center gap-1.5 text-xs font-semibold text-[#cbc3d7]/60 hover:text-[#d4af37] transition-colors cursor-pointer group"
+      >
+        <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Home
+      </button>
+
       {/* Logo Area */}
       <div className="mb-6 flex flex-col items-center text-center">
         <img

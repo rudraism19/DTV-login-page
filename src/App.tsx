@@ -41,7 +41,14 @@ const INITIAL_SOURCES: SyncSource[] = [
 ];
 
 export default function App() {
-  const [view, setView] = useState<'signin' | 'signup' | 'forgot'>('signin');
+  const [view, setView] = useState<'signin' | 'signup' | 'forgot'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view');
+    if (viewParam === 'signup' || viewParam === 'forgot') {
+      return viewParam;
+    }
+    return 'signin';
+  });
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   // Load session from localStorage on mount
@@ -60,6 +67,24 @@ export default function App() {
   const handleUpdateUser = (updatedUser: User) => {
     setCurrentUser(updatedUser);
     localStorage.setItem('dtv_student_session', JSON.stringify(updatedUser));
+
+    // Sync with main site auth key
+    const dtUser = {
+      loggedIn: true,
+      name: updatedUser.fullName,
+      email: updatedUser.email,
+      phone: updatedUser.mobileNumber || '',
+      role: updatedUser.role ? updatedUser.role.toLowerCase() : 'student',
+      city: updatedUser.city || '',
+      token: 'mock-session-token-' + updatedUser.id,
+      loggedInAt: new Date().toISOString()
+    };
+    localStorage.setItem('dt_user', JSON.stringify(dtUser));
+
+    // Redirect back to main site home page
+    setTimeout(() => {
+      window.location.href = '/index.html';
+    }, 100);
   };
 
   const handleSignInSuccess = (email: string) => {
