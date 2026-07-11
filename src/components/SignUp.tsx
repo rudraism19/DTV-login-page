@@ -30,6 +30,39 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // Password Strength Meter Logic
+  const getPasswordStrength = (pw: string) => {
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    return score; // 0-4
+  };
+
+  const pwScore = getPasswordStrength(password);
+  const strengthFillPct = password.length === 0 ? 0 : Math.max(25, (pwScore / 4) * 100);
+  
+  let strengthLabel = 'WEAK';
+  let strengthColorClass = 'text-[#FF5C5C]';
+  let strengthBarBgColor = '#FF5C5C';
+  
+  if (pwScore <= 1) {
+    strengthLabel = 'WEAK';
+    strengthColorClass = 'text-[#FF5C5C]';
+    strengthBarBgColor = '#FF5C5C';
+  } else if (pwScore <= 2) {
+    strengthLabel = 'MEDIUM';
+    strengthColorClass = 'text-[#F5B93D]';
+    strengthBarBgColor = '#F5B93D';
+  } else {
+    strengthLabel = 'STRONG';
+    strengthColorClass = 'text-[#2ECC71]';
+    strengthBarBgColor = '#2ECC71';
+  }
 
   const handleSocialSignUp = (provider: string) => {
     const profileMap: Record<string, { fullName: string; email: string; mobileNumber: string; role: string; city: string }> = {
@@ -64,7 +97,14 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
       city: 'Silicon Valley',
     };
 
-    onSignUpSuccess(profile);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onSignUpSuccess(profile);
+      }, 900);
+    }, 400);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -82,13 +122,21 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
       return;
     }
     setError('');
-    onSignUpSuccess({
-      fullName,
-      email,
-      mobileNumber,
-      role,
-      city,
-    });
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onSignUpSuccess({
+          fullName,
+          email,
+          mobileNumber,
+          role,
+          city,
+        });
+      }, 900);
+    }, 400);
   };
 
   return (
@@ -263,6 +311,20 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
                   placeholder="At least 6 characters"
                 />
               </div>
+              {password.length > 0 && (
+                <div className="password-strength mt-2">
+                  <div className="strength-bar w-full h-[4px] bg-white/15 rounded-[2px] overflow-hidden">
+                    <div 
+                      className="strength-fill h-full rounded-[2px] transition-all duration-350"
+                      style={{ width: `${strengthFillPct}%`, backgroundColor: strengthBarBgColor }}
+                    ></div>
+                  </div>
+                  <div className="strength-row flex justify-between mt-1.5 text-[9px] font-bold">
+                    <span className={`strength-label uppercase tracking-wider ${strengthColorClass}`}>{strengthLabel}</span>
+                    <span className="strength-hint text-white/50">Must be at least 8 characters</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Confirm Password */}
@@ -289,9 +351,18 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
           <button
             id="signup-submit-btn"
             type="submit"
-            className="btn-primary w-full mt-4 py-3 rounded-lg text-[#101415] font-bold text-xs bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] hover:from-[#e5c04c] hover:to-[#bc9d3d] transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_10px_25px_-5px_rgba(212,175,55,0.3)] cursor-pointer"
+            disabled={isLoading || isSuccess}
+            className={`btn-signin w-full mt-4 py-3 rounded-lg font-bold text-xs flex items-center justify-center gap-2 group relative overflow-hidden cursor-pointer transition-all duration-300 ${
+              isSuccess 
+                ? 'success bg-[#2ECC71] shadow-[0_0_24px_rgba(46,204,113,0.55)] text-white' 
+                : 'bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] text-[#101415] hover:from-[#e5c04c] hover:to-[#bc9d3d] shadow-[0_10px_25px_-5px_rgba(212,175,55,0.3)]'
+            }`}
           >
-            Instantiate My Twin
+            {isSuccess ? (
+              <span className="relative z-10 font-bold">&#10003; Twin Instantiated!</span>
+            ) : (
+              <span className="relative z-10 font-bold">{isLoading ? 'Instantiating...' : 'Instantiate My Twin'}</span>
+            )}
           </button>
         </form>
 
@@ -312,7 +383,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
             id="google-signup-btn"
             type="button"
             onClick={() => handleSocialSignUp('Google')}
-            className="flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Register with Google"
           >
             <svg className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none">
@@ -340,7 +411,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
             id="github-signup-btn"
             type="button"
             onClick={() => handleSocialSignUp('GitHub')}
-            className="flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Register with GitHub"
           >
             <svg className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
@@ -357,7 +428,7 @@ export default function SignUp({ onSignInClick, onSignUpSuccess }: SignUpProps) 
             id="apple-signup-btn"
             type="button"
             onClick={() => handleSocialSignUp('Apple')}
-            className="flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Register with Apple"
           >
             <svg className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">

@@ -71,3 +71,28 @@
 body {
   background-color: #101415;
 }
+
+/* SPEC 1: SUCCESS SUBMIT STATE animation */
+.btn-signin.success {
+  background: #2ECC71 !important;
+  box-shadow: 0 0 24px rgba(46, 204, 113, 0.55) !important;
+  animation: btnPulse 0.4s ease;
+}
+
+@keyframes btnPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* SPEC 3: SOCIAL ICON HOVER effect */
+.social-btn {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+  transform: scale(1.12) !important;
+  border-color: rgba(255, 215, 110, 0.9) !important;
+  box-shadow: 0 0 14px rgba(255, 215, 110, 0.55) !important;
+}

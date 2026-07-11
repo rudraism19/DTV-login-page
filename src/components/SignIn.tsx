@@ -13,6 +13,8 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,11 +27,27 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
       return;
     }
     setError('');
-    onSignInSuccess(email);
+    setIsLoading(true);
+    
+    // Simulate auth check delay, then trigger checkmark success animation
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onSignInSuccess(email);
+      }, 900);
+    }, 400);
   };
 
   const handleDemoSignIn = () => {
-    onSignInSuccess('student@digitaltwin.edu');
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onSignInSuccess('student@digitaltwin.edu');
+      }, 900);
+    }, 300);
   };
 
   const handleSocialSignIn = (provider: string) => {
@@ -38,7 +56,14 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
       GitHub: 'github.developer@digitaltwin.edu',
       Apple: 'apple.explorer@digitaltwin.edu',
     };
-    onSignInSuccess(emailMap[provider] || 'social.student@digitaltwin.edu');
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onSignInSuccess(emailMap[provider] || 'social.student@digitaltwin.edu');
+      }, 900);
+    }, 300);
   };
 
   return (
@@ -156,10 +181,21 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
           <button
             id="signin-submit-btn"
             type="submit"
-            className="btn-primary w-full mt-4 py-3.5 rounded-lg text-[#101415] font-bold text-sm bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] hover:from-[#e5c04c] hover:to-[#bc9d3d] transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_10px_25px_-5px_rgba(212,175,55,0.4)] relative overflow-hidden cursor-pointer"
+            disabled={isLoading || isSuccess}
+            className={`btn-signin w-full mt-4 py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 group relative overflow-hidden cursor-pointer transition-all duration-300 ${
+              isSuccess 
+                ? 'success bg-[#2ECC71] shadow-[0_0_24px_rgba(46,204,113,0.55)] text-white' 
+                : 'bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] text-[#101415] hover:from-[#e5c04c] hover:to-[#bc9d3d] shadow-[0_10px_25px_-5px_rgba(212,175,55,0.4)]'
+            }`}
           >
-            <span className="relative z-10 font-bold">Sign In</span>
-            <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+            {isSuccess ? (
+              <span className="relative z-10 font-bold">&#10003; Signed In!</span>
+            ) : (
+              <>
+                <span className="relative z-10 font-bold">{isLoading ? 'Signing In...' : 'Sign In'}</span>
+                {!isLoading && <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />}
+              </>
+            )}
             <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity z-0"></div>
           </button>
         </form>
@@ -181,7 +217,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
             id="google-signin-btn"
             type="button"
             onClick={() => handleSocialSignIn('Google')}
-            className="flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Sign in with Google"
           >
             <svg className="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none">
@@ -209,7 +245,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
             id="github-signin-btn"
             type="button"
             onClick={() => handleSocialSignIn('GitHub')}
-            className="flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Sign in with GitHub"
           >
             <svg className="w-4 h-4 text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
@@ -226,7 +262,7 @@ export default function SignIn({ onSignUpClick, onForgotPasswordClick, onSignInS
             id="apple-signin-btn"
             type="button"
             onClick={() => handleSocialSignIn('Apple')}
-            className="flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
+            className="social-btn flex items-center justify-center py-2.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/5 hover:border-[#d4af37]/40 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.1)]"
             title="Sign in with Apple"
           >
             <svg className="w-4 h-4 text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
